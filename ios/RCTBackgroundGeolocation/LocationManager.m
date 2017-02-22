@@ -587,11 +587,8 @@ enum {
     } else if (actAsInMode == FOREGROUND) {
         // Adjust distanceFilter incrementally based upon current speed
         float newDistanceFilter = [self calculateDistanceFilter:[lastLocation.speed floatValue]];
-        if (newDistanceFilter != locationManager.distanceFilter) {
-            DDLogInfo(@"LocationManager updated distanceFilter, new: %f, old: %f", newDistanceFilter, locationManager.distanceFilter);
-            locationManager.distanceFilter = newDistanceFilter;
-            [self startUpdatingLocation];
-        }
+        locationManager.distanceFilter = _config.distanceFilter;
+        [self startUpdatingLocation];
     } else if ([self locationIsBeyondStationaryRegion:lastLocation]) {
         if (_config.isDebugging) {
             [self notify:@"Manual stationary exit-detection"];
